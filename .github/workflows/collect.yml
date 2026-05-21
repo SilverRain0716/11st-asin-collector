@@ -22,12 +22,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: ASIN 수집 실행
+        env:
+          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+          GDRIVE_FOLDER_ID:   ${{ secrets.GDRIVE_FOLDER_ID }}
         run: python scraper.py
-
-      - name: 결과 파일 커밋
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add 11st_amazon_asin.xlsx
-          git diff --cached --quiet || git commit -m "ASIN 수집 $(date +'%Y-%m-%d')"
-          git push
